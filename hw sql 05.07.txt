@@ -1,0 +1,131 @@
+//Найти все товары с ценой больше 30
+
+db.products.find(
+{  price:{$gt:30}},
+{_id:0,title:1,price:1}
+)
+
+//Задать значение 10 для свойства "count" у товара с идентификатором 5
+//
+db.products.updateOne(
+{id:3},
+{$inc:{
+    count:10
+}}
+)
+
+db.products.find(
+{id:3})
+//
+//Найти все товары с категорией "electronics" или "home"
+//
+
+db.products.find(
+    {category:
+        {$in:
+            ['electronics','home']
+            }
+    }
+)
+//
+//Увеличить на 1 поле "countOfOrderedUnits" у всех товаров с категорией "music"
+//
+
+db.products.updateMany(
+{
+    category:'music'
+},
+{
+    $inc:{
+        countOfOrderedUnits:1
+    }
+}
+);
+db.products.find();
+//
+//Найти все товары, у которых поле "marks" содержит значения 4 и 5
+//
+db.products.find(
+{marks:
+    {$in:
+        [4,5]
+        }
+}
+);
+//
+//Обновить поле "category" на "sports" для всех товаров, у которых поле "category" равно "sport"
+
+db.products.updateMany(
+{category:'sport'},
+{$set:
+    {
+        category:'sports'
+    }}
+)
+//Найти все товары, у которых поле "marks" не содержит значение 3
+//
+db.products.find(
+{
+    marks:{
+        $ne:3
+    }
+}
+)
+//
+//Обновить поле "marks" у товара с идентификатором 8, добавив значение 5
+//
+db.products.updateOne(
+{id:8},
+{$push:{marks:5}}
+)
+//
+//Найти все товары, у которых поле "marks" содержит ровно 4 элемента
+//
+db.products.find(
+{ marks:{$size:4}}
+)
+//
+//Обновить поле "price" у всех товаров с категорией "home", увеличив цену на 10%
+//
+db.products.updateMany(
+{category:'home'},
+{ $mul:
+    { price:1.1}
+    }
+)
+//
+//Найти все товары, у которых поле "countOfOrderedUnits" больше или равно 10
+//
+db.products.find(
+{ countOfOrderedUnits:{$gte:10}  }
+)
+//
+//Обновить поле "count" у всех товаров с категорией "music", увеличив его на 5
+//
+db.products.updateMany(
+{ category:'music'},
+{ $inc:
+    { count: 5}}
+)
+//
+//Найти все товары, у которых поле "marks" содержит все значения [4, 5]
+//
+db.products.find(
+{ marks:{$in:[4,5]}}
+)
+db.products.find({ marks: { $all: [4, 5] } });
+
+//
+//Обновить поле "category" у всех товаров, у которых поле "category" равно "sport", заменив его на "outdoor"
+//
+db.products.updateMany(
+{ category:'sport'},
+{ $set:{category:'outdoor'}}
+)
+//
+//Найти все товары, у которых поле "marks" содержит значения [3, 4, 5]
+db.products.find({
+    marks:{
+        $in:[3,4,5]
+    }
+})
