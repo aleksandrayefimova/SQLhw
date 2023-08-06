@@ -1,0 +1,37 @@
+// Задача getMin().
+// Реализовать структуру данных SpecialStack, которая поддерживает все операции со стеком, 
+// такие как push(), pop(), isEmpty(), … и дополнительную операцию getMin(), 
+// которая должна возвращать минимальный элемент из SpecialStack. 
+
+
+class SpecialStack{
+    constructor(items, length){
+        this.items = items;
+        this.items_length = length;
+    }
+
+    push(el){
+        this.items[this.items_length] = el;
+        this.items_length++
+    }
+
+    pop(){
+        const deleteItem = this.items[this.items_length-1]
+        this.items.splice(this.items_length-1,1)
+        this.items_length--;
+        return deleteItem
+    }
+    isEmpty(){
+        return this.items_length ===0
+    }
+
+    getMin(){
+        if(this.items_length===0) return console.log('Error');
+        else{this.items.sort((a,b)=> a-b)
+
+        return this.items[0]}
+    }
+
+}
+
+const exp = new SpecialStack(['2','24','8'], 3)
