@@ -1,0 +1,40 @@
+//Вывести ко-во заблокированных юзеров
+//
+db.users.countDocuments(
+{is_blocked:true}
+)
+
+
+//Вывести страны незаблокированных юзеров
+//
+
+db.users.find(
+{is_blocked:{$ne:true}},
+{_id:0, country:1}
+)
+//Заблокировать юзеров из China
+//
+db.users.updateMany(
+{country:'China'},
+{$set:{is_blocked:true}}
+)
+//Увеличить баланс всех незаблокированных юзеров на 100
+//
+db.users.updateMany(
+{is_blocked:{$ne:true}},
+{$inc:{balance:100}}
+)
+//Добавить несколько реакций в коллекцию reactions
+db.posts.aggregate();            
+db.reactions.insertMany([
+{_id:1, post_id:1,likes:10},
+{_id:2, post_id:2,likes:25},
+{_id:3, post_id:3,likes:31},
+]);  
+db.reactions.aggregate();
+
+
+
+
+
+
