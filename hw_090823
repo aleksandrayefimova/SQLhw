@@ -1,0 +1,48 @@
+//1 уровень сложности: 1. Найдите ошибки в след/запросе:
+//// Увеличить баланс всем юзерам не из Germany на 25%
+//db.posts.updateOne(
+//    { country: 'Germany'  },
+//    { $inc: { balance: .75 } }
+//)
+//ответ:
+
+db.users.updateMany(
+{country:{$ne:'Germany'}},
+{$mul:{balance:1.25}}
+)
+
+
+//
+//Вывести все посты с тегом music
+
+db.posts.aggregate([
+{$match:{tag:'music'}}
+])
+//or
+db.posts.find({ tag: 'music' })
+
+//
+//Опишите назначение оператора $skip (и вход/выход)
+
+//принимает на вход коллекцию, аргумент: положительное, целое число, которое указывает 
+//на кол-во док-ов кототрые нужно пропустить, на выходе коолекция с вычетом указанных документов
+
+//Вывести названия постов и имена авторов, которые имеют отрицательный баланс
+
+db.users.aggregate([
+{$lookup:{
+    'from':'posts',
+    'localField':'_id',
+    'foreignField':'author_id',
+    'as':'posts'
+}},
+{$match:{balance:{$lt:0}}},
+{$unwind:'$posts'},
+{$project:{
+    _id:0,
+    fullname:1,
+    'posts.content':1
+}}
+])
+
+
